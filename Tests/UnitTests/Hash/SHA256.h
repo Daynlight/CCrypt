@@ -1,6 +1,8 @@
 #pragma once
 #include "../Assert.h"
 
+#include "sha256/sha256.h"
+
 #include <openssl/sha.h>
 #include <sstream>
 #include <iomanip>
@@ -40,9 +42,12 @@ void UnitTests::SHA256::runAll(){
 };
 
 inline void SHA256::compareWithCPPSHA256() {
-  const std::string text = "Hello World";
+  char text[50] = "Hello World";
   const std::string cpp_hash = cpp_sha(text);
+  char hash[50] = {0};
+  crypt_sha256(text, hash);
+  printf("%s\n", hash);
 
-  
+  assert->equal("Sha256: compareWithCPPSHA256 failed", hash, cpp_hash);
 };
 };
