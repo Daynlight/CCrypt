@@ -10,12 +10,10 @@ private:
   unsigned int passed = 0;
 
 public:
-  template<typename T>
-  void assertion(const std::string& assertText, std::function<bool()> fun){
+  void assertion(const std::string& assertText, bool state){
     total++;
-
-    if(!fun)
-      printf("%s\n", assertText.c_str());
+    if(!state)
+      printf("%s\n", assertText.c_str());  
     else
       passed++;
   };
@@ -33,8 +31,8 @@ public:
       passed++;
   };
 
-  void results(){
-    printf("%d/%d passed\n", passed, total);
+  void results(const std::string& text){
+    printf("=== %s ===\n%d/%d passed\n", text.c_str(), passed, total);
   };
 };
 };

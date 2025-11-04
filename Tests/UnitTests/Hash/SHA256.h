@@ -34,19 +34,74 @@ private:
 public:
   SHA256(Assert* assert) :assert(assert) {};
   void runAll();
+  void ROTR();
+  void notROTR();
   void compareWithCPPSHA256();
 };
 
 void UnitTests::SHA256::runAll(){
+  ROTR();
+  notROTR();
   compareWithCPPSHA256();
 }
+
+
+
+
+
+
+
+inline void SHA256::ROTR(){
+  char text[4] = {0x48, 0x65, 0x6C, 0x6C};
+  char rot_text[4] = {0};
+  crypt_sha256_ROTR(text, rot_text, 2);
+  unsigned char expected[4] = {0x12, 0x19, 0x5B, 0x1B};
+  
+  bool passed = 1;
+  for(int i = 0; i < 4; i++)
+    if(rot_text[i] != expected[i]){
+      passed = 0;
+      break;
+    };
+
+  assert->assertion("Sha256: ROTR failed", passed);
+  
+  if(!passed){
+    for(int j = 0; j < 4; j++)
+      printf("%02X = %02X\n", rot_text[j] & 0xFF, expected[j]);
+  };
+};
+
+
+
+inline void SHA256::notROTR(){
+  char text[4] = {0x48, 0x65, 0x6C, 0x6C};
+  char rot_text[4] = {0};
+  crypt_sha256_ROTR(text, rot_text, 2);
+  unsigned char expected[4] = {0x12, 0x19, 0x5B, 0x1C};
+  
+  bool passed = 1;
+  for(int i = 0; i < 4; i++)
+    if(rot_text[i] != expected[i]){
+      passed = 0;
+      break;
+    };
+
+  assert->assertion("Sha256: ROTR failed", !passed);
+  
+  if(passed){
+    for(int j = 0; j < 4; j++)
+      printf("%02X = %02X\n", rot_text[j] & 0xFF, expected[j]);
+  };
+};
+
+
 
 inline void SHA256::compareWithCPPSHA256() {
   char text[50] = "Hello World";
   const std::string cpp_hash = cpp_sha(text);
   char hash[50] = {0};
   crypt_sha256(text, hash);
-  printf("%s\n", hash);
 
   assert->equal("Sha256: compareWithCPPSHA256 failed", hash, cpp_hash);
 };
