@@ -39,7 +39,7 @@ public:
 
 void UnitTests::SHA256::runAll(){
   compareWithCPPSHA256();
-};
+}
 
 inline void SHA256::compareWithCPPSHA256() {
   char text[50] = "Hello World";
