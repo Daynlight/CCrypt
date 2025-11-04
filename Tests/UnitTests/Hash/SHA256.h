@@ -36,14 +36,18 @@ public:
   void runAll();
   void ROTR();
   void notROTR();
+  void bigSigma1();
+  void notBigSigma1();
   void compareWithCPPSHA256();
 };
 
 void UnitTests::SHA256::runAll(){
   ROTR();
   notROTR();
+  bigSigma1();
+  notBigSigma1();
   compareWithCPPSHA256();
-}
+};
 
 
 
@@ -92,6 +96,52 @@ inline void SHA256::notROTR(){
   if(passed){
     for(int j = 0; j < 4; j++)
       printf("%02X = %02X\n", rot_text[j] & 0xFF, expected[j]);
+  };
+};
+
+
+
+inline void SHA256::bigSigma1() {
+  char text[4] = {0x48, 0x65, 0x6C, 0x6C};
+  char sig_text[4] = {0};
+  crypt_sha256_bigSigma1(text, sig_text);
+  unsigned char expected[4] = {0x48, 0x65, 0x6C, 0x6C};
+
+  bool passed = 1;
+  for(int i = 0; i < 4; i++)
+    if(sig_text[i] != expected[i]){
+      passed = 0;
+      break;
+    };
+
+  assert->assertion("Sha256: bigSigma failed", passed);
+  
+  if(!passed){
+    for(int j = 0; j < 4; j++)
+      printf("%02X = %02X\n", sig_text[j] & 0xFF, expected[j]);
+  };
+};
+
+
+
+inline void SHA256::notBigSigma1() {
+  char text[4] = {0x48, 0x65, 0x6C, 0x6C};
+  char sig_text[4] = {0};
+  crypt_sha256_bigSigma1(text, sig_text);
+  unsigned char expected[4] = {0x48, 0x65, 0x2B, 0x6A};
+
+  bool passed = 1;
+  for(int i = 0; i < 4; i++)
+    if(sig_text[i] != expected[i]){
+      passed = 0;
+      break;
+    };
+
+  assert->assertion("Sha256: bigSigma failed", !passed);
+  
+  if(passed){
+    for(int j = 0; j < 4; j++)
+      printf("%02X = %02X\n", sig_text[j] & 0xFF, expected[j]);
   };
 };
 
