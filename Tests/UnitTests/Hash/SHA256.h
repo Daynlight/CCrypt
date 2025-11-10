@@ -145,11 +145,11 @@ inline void SHA256::bigSigma0() {
   char text[4] = {0x48, 0x65, 0x6C, 0x6C};
   char sig_text[4] = {0};
   crypt_sha256_bigSigma0(text, sig_text);
-  unsigned char expected[4] = {0x48, 0x65, 0x6C, 0x6C};
+  unsigned char expected[4] = {0xE4, 0xCA, 0xA9, 0x11};
 
   bool passed = 1;
   for(int i = 0; i < 4; i++)
-    if(sig_text[i] != expected[i]){
+    if((unsigned char)(sig_text[i]) != expected[i]){
       passed = 0;
       break;
     };
@@ -158,7 +158,7 @@ inline void SHA256::bigSigma0() {
   
   if(!passed){
     for(int j = 0; j < 4; j++)
-      printf("%02X = %02X\n", sig_text[j] & 0xFF, expected[j]);
+      printf("%02X = %02X\n", (unsigned char)(sig_text[j]), expected[j]);
   };
 };
 
@@ -172,11 +172,11 @@ inline void SHA256::notBigSigma0() {
   char text[4] = {0x48, 0x65, 0x6C, 0x6C};
   char sig_text[4] = {0};
   crypt_sha256_bigSigma0(text, sig_text);
-  unsigned char expected[4] = {0x48, 0x65, 0x6C, 0x6A};
+  unsigned char expected[4] = {0x14, 0xAA, 0x49, 0x21};
 
   bool passed = 1;
   for(int i = 0; i < 4; i++)
-    if(sig_text[i] != expected[i]){
+    if((unsigned char)(sig_text[i]) != expected[i]){
       passed = 0;
       break;
     };
@@ -185,7 +185,7 @@ inline void SHA256::notBigSigma0() {
   
   if(passed){
     for(int j = 0; j < 4; j++)
-      printf("%02X = %02X\n", sig_text[j] & 0xFF, expected[j]);
+      printf("%02X = %02X\n", (unsigned char)(sig_text[j]), expected[j]);
   };
 };
 
@@ -199,11 +199,11 @@ inline void SHA256::bigSigma1() {
   char text[4] = {0x48, 0x65, 0x6C, 0x6C};
   char sig_text[4] = {0};
   crypt_sha256_bigSigma1(text, sig_text);
-  unsigned char expected[4] = {0x48, 0x65, 0x6C, 0x6C};
+  unsigned char expected[4] = {0x0E, 0x1E, 0xAF, 0x38};
 
   bool passed = 1;
   for(int i = 0; i < 4; i++)
-    if(sig_text[i] != expected[i]){
+    if((unsigned char)(sig_text[i]) != expected[i]){
       passed = 0;
       break;
     };
@@ -212,7 +212,7 @@ inline void SHA256::bigSigma1() {
   
   if(!passed){
     for(int j = 0; j < 4; j++)
-      printf("%02X = %02X\n", sig_text[j] & 0xFF, expected[j]);
+      printf("%02X = %02X\n", (unsigned char)(sig_text[j]), expected[j]);
   };
 };
 
@@ -226,11 +226,11 @@ inline void SHA256::notBigSigma1() {
   char text[4] = {0x48, 0x65, 0x6C, 0x6C};
   char sig_text[4] = {0};
   crypt_sha256_bigSigma1(text, sig_text);
-  unsigned char expected[4] = {0x48, 0x65, 0x2B, 0x6A};
+  unsigned char expected[4] = {0x5E, 0xFE, 0x6F, 0x21};
 
   bool passed = 1;
   for(int i = 0; i < 4; i++)
-    if(sig_text[i] != expected[i]){
+    if((unsigned char)(sig_text[i]) != expected[i]){
       passed = 0;
       break;
     };
@@ -239,7 +239,7 @@ inline void SHA256::notBigSigma1() {
   
   if(passed){
     for(int j = 0; j < 4; j++)
-      printf("%02X = %02X\n", sig_text[j] & 0xFF, expected[j]);
+      printf("%02X = %02X\n", (unsigned char)(sig_text[j]), expected[j]);
   };
 }
 
