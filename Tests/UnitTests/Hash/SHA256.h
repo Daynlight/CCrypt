@@ -369,11 +369,25 @@ inline void SHA256::notMaj(){
 
 
 inline void SHA256::compareWithCPPSHA256() {
-  char text[50] = "Hello World";
+  const char* text = "Hello World";
   const std::string cpp_hash = cpp_sha(text);
-  char hash[50] = {0};
-  crypt_sha256(text, hash);
 
-  assert->equal("Sha256: compareWithCPPSHA256 failed", hash, cpp_hash);
+  unsigned char hash[32] = {0};
+  crypt_sha256((char*)text, (char*)hash);
+
+  // Convert your binary output to hex
+  std::ostringstream oss;
+  for (int i = 0; i < 32; ++i)
+    oss << std::hex << std::setw(2) << std::setfill('0') << (int)hash[i];
+
+  std::string my_hash = oss.str();
+
+  bool passed = (cpp_hash == my_hash);
+  assert->assertion("Sha256: compareWithCPPSHA256 failed", passed);
+
+  if (!passed) {
+    printf("\nTested : %s\n", my_hash.c_str());
+    printf("Correct: %s\n", cpp_hash.c_str());
+  }
 };
 };
