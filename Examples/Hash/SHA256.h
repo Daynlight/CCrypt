@@ -20,5 +20,5 @@ void SHA256Example(){
 
   std::string my_hash = oss.str();
 
-  printf("\nTested : %s\n", my_hash.c_str());
+  printf("Sha256(%s): %s\n", text, my_hash.c_str());
 };
