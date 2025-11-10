@@ -16,12 +16,12 @@
 #include "sha256/sha256.h"
 #include "sha256.h"
 
-int K[7] = {4, 9, 25, 49, 121, 13*13, 17*17};
 
 
 
 
 
+// Placeholder
 void crypt_sha256(char* data, char* hash) {
   // --- Step 1. Initial hash values
   char H[8][4] = {
