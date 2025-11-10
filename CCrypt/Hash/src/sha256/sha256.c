@@ -118,4 +118,62 @@ void crypt_sha256_bigSigma1(char data[4], char out[4]){
   out[1] = (o_x >> 16) & 0xFF;
   out[2] = (o_x >> 8)  & 0xFF;
   out[3] =  o_x & 0xFF;
+}
+
+
+
+
+
+
+void crypt_sha256_ch(char x[4], char y[4], char z[4], char out[4]) {
+  uint32_t rx = ((uint32_t)(uint8_t)x[0] << 24) |
+                  ((uint32_t)(uint8_t)x[1] << 16) |
+                  ((uint32_t)(uint8_t)x[2] << 8)  |
+                  ((uint32_t)(uint8_t)x[3]);
+
+  uint32_t ry = ((uint32_t)(uint8_t)y[0] << 24) |
+                  ((uint32_t)(uint8_t)y[1] << 16) |
+                  ((uint32_t)(uint8_t)y[2] << 8)  |
+                  ((uint32_t)(uint8_t)y[3]);
+
+  uint32_t rz = ((uint32_t)(uint8_t)z[0] << 24) |
+                  ((uint32_t)(uint8_t)z[1] << 16) |
+                  ((uint32_t)(uint8_t)z[2] << 8)  |
+                  ((uint32_t)(uint8_t)z[3]);
+
+  uint32_t o_x = (rx & ry) ^ ((~rx) & rz);
+
+  out[0] = (o_x >> 24) & 0xFF;
+  out[1] = (o_x >> 16) & 0xFF;
+  out[2] = (o_x >> 8)  & 0xFF;
+  out[3] =  o_x & 0xFF;
+}
+
+
+
+
+
+
+void crypt_sha256_maj(char x[4], char y[4], char z[4], char out[4]) {
+  uint32_t rx = ((uint32_t)(uint8_t)x[0] << 24) |
+                  ((uint32_t)(uint8_t)x[1] << 16) |
+                  ((uint32_t)(uint8_t)x[2] << 8)  |
+                  ((uint32_t)(uint8_t)x[3]);
+
+  uint32_t ry = ((uint32_t)(uint8_t)y[0] << 24) |
+                  ((uint32_t)(uint8_t)y[1] << 16) |
+                  ((uint32_t)(uint8_t)y[2] << 8)  |
+                  ((uint32_t)(uint8_t)y[3]);
+
+  uint32_t rz = ((uint32_t)(uint8_t)z[0] << 24) |
+                  ((uint32_t)(uint8_t)z[1] << 16) |
+                  ((uint32_t)(uint8_t)z[2] << 8)  |
+                  ((uint32_t)(uint8_t)z[3]);
+
+  uint32_t o_x = (rx & ry) ^ (rx & rz) ^ (ry & rz);
+
+  out[0] = (o_x >> 24) & 0xFF;
+  out[1] = (o_x >> 16) & 0xFF;
+  out[2] = (o_x >> 8)  & 0xFF;
+  out[3] =  o_x & 0xFF;
 };

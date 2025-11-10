@@ -72,6 +72,8 @@ void UnitTests::SHA256::runAll(){
   notBigSigma0();
   bigSigma1();
   notBigSigma1();
+  Ch();
+  notCh();
   compareWithCPPSHA256();
 };
 
@@ -100,7 +102,7 @@ inline void SHA256::ROTR(){
       break;
     };
 
-  assert->assertion("Sha256: ROTR failed", passed);
+  assert->assertion("Sha256::ROTR failed", passed);
   
   if(!passed){
     for(int j = 0; j < 4; j++)
@@ -127,7 +129,7 @@ inline void SHA256::notROTR(){
       break;
     };
 
-  assert->assertion("Sha256: ROTR failed", !passed);
+  assert->assertion("Sha256::ROTR failed", !passed);
   
   if(passed){
     for(int j = 0; j < 4; j++)
@@ -154,7 +156,7 @@ inline void SHA256::bigSigma0() {
       break;
     };
 
-  assert->assertion("Sha256: bigSigma0 failed", passed);
+  assert->assertion("Sha256::bigSigma0 failed", passed);
   
   if(!passed){
     for(int j = 0; j < 4; j++)
@@ -181,7 +183,7 @@ inline void SHA256::notBigSigma0() {
       break;
     };
 
-  assert->assertion("Sha256: bigSigma0 failed", !passed);
+  assert->assertion("Sha256::bigSigma0 failed", !passed);
   
   if(passed){
     for(int j = 0; j < 4; j++)
@@ -208,7 +210,7 @@ inline void SHA256::bigSigma1() {
       break;
     };
 
-  assert->assertion("Sha256: bigSigma1 failed", passed);
+  assert->assertion("Sha256::bigSigma1 failed", passed);
   
   if(!passed){
     for(int j = 0; j < 4; j++)
@@ -235,7 +237,65 @@ inline void SHA256::notBigSigma1() {
       break;
     };
 
-  assert->assertion("Sha256: notBigSigma1 failed", !passed);
+  assert->assertion("Sha256::notBigSigma1 failed", !passed);
+  
+  if(passed){
+    for(int j = 0; j < 4; j++)
+      printf("%02X = %02X\n", (unsigned char)(sig_text[j]), expected[j]);
+  };
+}
+
+
+
+
+
+
+
+inline void SHA256::Ch(){
+  char text1[4] = {0x48, 0x65, 0x6C, 0x6C};
+  char text2[4] = {0x41, 0x21, 0x7E, 0x4F};
+  char text3[4] = {0x0A, 0x43, 0x3C, 0x12};
+  char sig_text[4] = {0};
+  crypt_sha256_ch(text1, text2, text3, sig_text);
+  unsigned char expected[4] = {0x42, 0x23, 0x7C, 0x5E};
+
+  bool passed = 1;
+  for(int i = 0; i < 4; i++)
+    if((unsigned char)(sig_text[i]) != expected[i]){
+      passed = 0;
+      break;
+    };
+
+  assert->assertion("Sha256::Ch failed", passed);
+  
+  if(!passed){
+    for(int j = 0; j < 4; j++)
+      printf("%02X = %02X\n", (unsigned char)(sig_text[j]), expected[j]);
+  };
+}
+
+
+
+
+
+
+
+inline void SHA256::notCh(){
+  char text1[4] = {0x48, 0x65, 0x6C, 0x6C};
+  char text2[4] = {0x41, 0x21, 0x7E, 0x4F};
+  char text3[4] = {0x0A, 0x43, 0x3C, 0x12};
+  char sig_text[4] = {0};
+  crypt_sha256_ch(text1, text2, text3, sig_text);
+  unsigned char expected[4] = {0x12, 0x5B, 0x7A, 0x2D};
+
+  bool passed = 1;
+  for(int i = 0; i < 4; i++)
+    if((unsigned char)(sig_text[i]) != expected[i]){
+      passed = 0;
+      break;
+    };
+
+  assert->assertion("Sha256::notCh failed", !passed);
   
   if(passed){
     for(int j = 0; j < 4; j++)
