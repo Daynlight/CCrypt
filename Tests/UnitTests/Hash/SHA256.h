@@ -38,15 +38,10 @@ std::string cpp_sha(const std::string& text) {
 
 class SHA256{
 private:
-  Assert* assert;
+  Assert assert;
 public:
-  SHA256(Assert* assert) :assert(assert) {};
-  void runAll();
+  bool runAll();
 
-  void prepareBlock();
-  void splitBlock();
-  void expandBlock();
-  
   void ROTR();
   void notROTR();
   
@@ -65,7 +60,7 @@ public:
   void compareWithCPPSHA256();
 };
 
-void UnitTests::SHA256::runAll(){
+bool UnitTests::SHA256::runAll(){
   ROTR();
   notROTR();
   bigSigma0();
@@ -77,6 +72,8 @@ void UnitTests::SHA256::runAll(){
   Maj();
   notMaj();
   compareWithCPPSHA256();
+
+  return assert.results("SHA256");
 };
 
 
@@ -104,7 +101,7 @@ inline void SHA256::ROTR(){
       break;
     };
 
-  assert->assertion("Sha256::ROTR failed", passed);
+  assert.assertion("Sha256::ROTR failed", passed);
   
   if(!passed){
     for(int j = 0; j < 4; j++)
@@ -131,7 +128,7 @@ inline void SHA256::notROTR(){
       break;
     };
 
-  assert->assertion("Sha256::ROTR failed", !passed);
+  assert.assertion("Sha256::ROTR failed", !passed);
   
   if(passed){
     for(int j = 0; j < 4; j++)
@@ -158,7 +155,7 @@ inline void SHA256::bigSigma0() {
       break;
     };
 
-  assert->assertion("Sha256::bigSigma0 failed", passed);
+  assert.assertion("Sha256::bigSigma0 failed", passed);
   
   if(!passed){
     for(int j = 0; j < 4; j++)
@@ -185,7 +182,7 @@ inline void SHA256::notBigSigma0() {
       break;
     };
 
-  assert->assertion("Sha256::bigSigma0 failed", !passed);
+  assert.assertion("Sha256::bigSigma0 failed", !passed);
   
   if(passed){
     for(int j = 0; j < 4; j++)
@@ -212,7 +209,7 @@ inline void SHA256::bigSigma1() {
       break;
     };
 
-  assert->assertion("Sha256::bigSigma1 failed", passed);
+  assert.assertion("Sha256::bigSigma1 failed", passed);
   
   if(!passed){
     for(int j = 0; j < 4; j++)
@@ -239,7 +236,7 @@ inline void SHA256::notBigSigma1() {
       break;
     };
 
-  assert->assertion("Sha256::notBigSigma1 failed", !passed);
+  assert.assertion("Sha256::notBigSigma1 failed", !passed);
   
   if(passed){
     for(int j = 0; j < 4; j++)
@@ -268,7 +265,7 @@ inline void SHA256::Ch(){
       break;
     };
 
-  assert->assertion("Sha256::Ch failed", passed);
+  assert.assertion("Sha256::Ch failed", passed);
   
   if(!passed){
     for(int j = 0; j < 4; j++)
@@ -297,7 +294,7 @@ inline void SHA256::notCh(){
       break;
     };
 
-  assert->assertion("Sha256::notCh failed", !passed);
+  assert.assertion("Sha256::notCh failed", !passed);
   
   if(passed){
     for(int j = 0; j < 4; j++)
@@ -326,7 +323,7 @@ inline void SHA256::Maj(){
       break;
     };
 
-  assert->assertion("Sha256::Ch failed", passed);
+  assert.assertion("Sha256::Ch failed", passed);
   
   if(!passed){
     for(int j = 0; j < 4; j++)
@@ -355,7 +352,7 @@ inline void SHA256::notMaj(){
       break;
     };
 
-  assert->assertion("Sha256::Ch failed", !passed);
+  assert.assertion("Sha256::Ch failed", !passed);
   
   if(passed){
     for(int j = 0; j < 4; j++)
@@ -383,7 +380,7 @@ inline void SHA256::compareWithCPPSHA256() {
   std::string my_hash = oss.str();
 
   bool passed = (cpp_hash == my_hash);
-  assert->assertion("Sha256: compareWithCPPSHA256 failed", passed);
+  assert.assertion("Sha256: compareWithCPPSHA256 failed", passed);
 
   if (!passed) {
     printf("\nTested : %s\n", my_hash.c_str());

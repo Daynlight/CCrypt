@@ -31,8 +31,10 @@ public:
       passed++;
   };
 
-  void results(const std::string& text){
+  void clear() { total = 0; passed = 0; };
+  bool results(const std::string& text){
     printf("=== %s ===\n%d/%d passed\n", text.c_str(), passed, total);
+    return passed == total;
   };
 };
 };

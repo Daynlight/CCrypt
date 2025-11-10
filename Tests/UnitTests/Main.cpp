@@ -1,12 +1,14 @@
 #include "Hash/SHA256.h"
+// #include "Struct/UnorderedMap.h"
 #include "Assert.h"
 
 int main(){
   UnitTests::Assert assert;
-  
-  UnitTests::SHA256 sha_tests(&assert);
-  sha_tests.runAll();
-  assert.results("SHA256");
+  UnitTests::SHA256 sha_tests;
+  assert.assertion("SHA256 Tests", sha_tests.runAll());
 
-  return 0;
+  if(assert.results("Results"))
+    return 0;
+    
+  return -1;
 };
