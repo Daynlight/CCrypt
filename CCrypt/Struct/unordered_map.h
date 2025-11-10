@@ -61,8 +61,13 @@ struct unordered_map{
 unsigned int unordered_map_hash_fun(const char* key) {
   unsigned char hash[32] = {0};
   crypt_sha256((char*)key, (char*)hash);
-  return (unsigned int)*hash;
-};
+
+  unsigned int result = 0;
+  for (int i = 0; i < 4; ++i)
+      result = (result << 8) | hash[i];
+
+  return result;
+}
 
 void unordered_map_init(struct unordered_map* unordered_map, unsigned int size_of_el){
   vector_init(&unordered_map->data, size_of_el);
