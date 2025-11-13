@@ -60,7 +60,7 @@ jobs:
       run: |
         mkdir -p $GITHUB_WORKSPACE/res
 
-        echo pwd
+        echo ${pwd}
 
         cp ./build/ASD/*ASD* $GITHUB_WORKSPACE/res/
         
