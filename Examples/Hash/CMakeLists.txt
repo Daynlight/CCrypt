@@ -7,4 +7,4 @@ set(src
 )
 
 add_executable(HashExample ${src})
-target_link_libraries(HashExample PUBLIC CCrypt)
+target_link_libraries(HashExample PUBLIC ASD)

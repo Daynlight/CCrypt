@@ -1,7 +1,8 @@
 #pragma once
-#include "../Assert.h"
 
-#include "sha256/sha256.h"
+#include "../../Assert.h"
+
+#include "Algorithms/Hash/SHA256/sha256.h"
 
 #include <openssl/sha.h>
 #include <sstream>
