@@ -63,7 +63,7 @@ jobs:
       run: |
         mkdir -p $GITHUB_WORKSPACE/res
 
-        ls -la .
+        ls -la ./build/
 
         cp -r ./build/ASD/*ASD* $GITHUB_WORKSPACE/res/
         
