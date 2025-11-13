@@ -1,2 +1,2 @@
-# CCrypt
-Simple Encryption and Compresion Lib
+# ASD
+Simple and Advanced data Structures and Algorithms written in C.
