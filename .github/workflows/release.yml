@@ -35,21 +35,18 @@ jobs:
       id: strings
       shell: bash
       run: |
-        echo "build-output-dir=${{ github.workspace }}/" >> "$GITHUB_OUTPUT"
+        echo "build-output-dir=${{ github.workspace }}/build/" >> "$GITHUB_OUTPUT"
 
     - name: Configure CMake
       run: >
-        mkdir -p build/ &&
-        cd build/ &&
         cmake -B ${{ steps.strings.outputs.build-output-dir }}
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         -S ${{ github.workspace }}
 
-
     - name: Build
-      run: cmake --build .. --config ${{ matrix.build_type }} --parallel && cd ..
+      run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }} --parallel
 
 
 
@@ -63,8 +60,7 @@ jobs:
       run: |
         mkdir -p $GITHUB_WORKSPACE/res
 
-        ls -la ./ASD
-
+        ls -la ./build/ASD/
         cp -r ./build/ASD/*ASD* $GITHUB_WORKSPACE/res/
         
         cp -r ./ASD/include/ $GITHUB_WORKSPACE/res/include/
