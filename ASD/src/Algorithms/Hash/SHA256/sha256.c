@@ -1,17 +1,3 @@
-////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////
-
-// // delete conversion
-//   uint32_t x = ((uint32_t)(uint8_t)data[0] << 24) |
-//                 ((uint32_t)(uint8_t)data[1] << 16) |
-//                 ((uint32_t)(uint8_t)data[2] << 8)  |
-//                 ((uint32_t)(uint8_t)data[3]);
-
-
-
-
-
 
 #include "Algorithms/Hash/SHA256/sha256.h"
 
@@ -20,7 +6,7 @@
 
 
 
-// Placeholder
+// [NOTE] Placeholder
 void crypt_sha256(char* data, char* hash) {
   // --- Step 1. Initial hash values
   char H[8][4] = {
@@ -240,7 +226,7 @@ void crypt_sha256(char* data, char* hash) {
     hash[i * 4 + 2] = H[i][2];
     hash[i * 4 + 3] = H[i][3];
   }
-}
+};
 
 
 
@@ -333,7 +319,7 @@ void crypt_sha256_bigSigma1(char data[4], char out[4]){
   out[1] = (o_x >> 16) & 0xFF;
   out[2] = (o_x >> 8)  & 0xFF;
   out[3] =  o_x & 0xFF;
-}
+};
 
 
 
@@ -362,7 +348,7 @@ void crypt_sha256_ch(char x[4], char y[4], char z[4], char out[4]) {
   out[1] = (o_x >> 16) & 0xFF;
   out[2] = (o_x >> 8)  & 0xFF;
   out[3] =  o_x & 0xFF;
-}
+};
 
 
 

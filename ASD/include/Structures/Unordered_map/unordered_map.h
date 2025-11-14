@@ -2,49 +2,60 @@
 ///// unordered_map /////
 /////////////////////////
 //// IDEA ////
-// We want fast way to find path from command
-// unordered_map allow us to make fast lookup
-// soo it is prefect structure to use
+// We want a fast way to find the value from a kay.
+// An unordered_map gives O(1) average lookup time,
+// so it is fast to finding values from keys.
 
 //// How it works: ////
-// First we create vector with our real data
-// in this case paths to commands
-// Now to find path from command we have to 
-// iterate through them.
-// We will store additional informations in
-// buckets. Bucket is vector where we store 
-// keys and index to data in our main data
-// vector. Now we add hash function when we
-// want to find data instead of iterate
-// through all of them we hash key and 
-// make modulo BUCKETS to find bucket
-// where key is stored. Hashing always
-// gives the same results soo for the
-// same name we always access the same bucket
-// Instead of iterate for every element we
-// iterate only in one bucket.
-// More buckets = less iterations.
-// Also quality of hash is important
-// if hash is good then we separate keys in
-// better way and we have less iteration to do.
+// In our implementation we keep the actual data in a main vector.
+//
+// To avoid searching through the whole vector,
+// we use a hash table made of buckets.
+// A bucket is a small vector that stores:
+//   - the key (command name)
+//   - the index pointing to the real data
+//
+// When we insert or search:
+//   * We compute the hash of the key
+//   * We take (hash % BUCKETS) to choose the bucket
+//    * We only search inside that one bucket
+//    * We add value to that one bucket with index
+//
+// A good hash function spreads keys evenly,
+// so buckets stay small and lookups are fast.
+// More buckets means fewer collisions,
+// at the cost of more memory.
 
 //// TL;TR ////
-// * We hash key and save them with index to real data in bucket
-// * When we search for them we only search in one bucket
+// * We hash the key to select a bucket
+// * We store (key, index) in that bucket
+// * Lookup only scans one bucket, not all data
 
 
-#include <cstdlib>
-#include <cstring>
-#include <cstdio>
+#ifndef UNORDERED_MAP_H
+#define UNORDERED_MAP_H
 
 
 #include "Structures/Vector/vector.h"
 #include "Algorithms/Hash/SHA256/sha256.h"
 
 
-#define KEYSIZE 32
-#define BUCKETS 10
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 
+
+#ifndef KEYSIZE
+  #define KEYSIZE 32
+#endif
+#ifndef BUCKETS
+  #define BUCKETS 10
+#endif
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 
 
@@ -58,82 +69,19 @@ struct unordered_map{
   struct vector buckets[BUCKETS];     // type of bucket_record
 };
 
-unsigned int unordered_map_hash_fun(const char* key) {
-  unsigned char hash[32] = {0};
-  crypt_sha256((char*)key, (char*)hash);
 
-  unsigned int result = 0;
-  for (int i = 0; i < 4; ++i)
-      result = (result << 8) | hash[i];
+unsigned int unordered_map_hash_fun(const char* key);
 
-  return result;
+void unordered_map_init(struct unordered_map* unordered_map, unsigned int size_of_el);
+void unordered_map_destroy(struct unordered_map* unordered_map);
+
+int unordered_map_get(struct unordered_map* unordered_map, char* out, const char* key);
+void unordered_map_set(struct unordered_map* unordered_map, char* data, const char* key);
+
+
+
+#ifdef __cplusplus
 }
+#endif
 
-void unordered_map_init(struct unordered_map* unordered_map, unsigned int size_of_el){
-  vector_init(&unordered_map->data, size_of_el);
-  for(int i = 0; i < BUCKETS; i++)
-    vector_init(&unordered_map->buckets[i], sizeof(struct bucket_record));
-};
-
-void unordered_map_destroy(struct unordered_map* unordered_map){
-  vector_destroy(&unordered_map->data);
-  for(int i = 0; i < BUCKETS; i++)
-    vector_destroy(&unordered_map->buckets[i]);
-};
-
-int unordered_map_get(struct unordered_map* unordered_map, char* out, const char* key){
-  unsigned int hash = unordered_map_hash_fun(key);
-  unsigned int bucket_id = hash % BUCKETS;
-
-  unsigned int index = 0;
-  for(int i = 0; i < unordered_map->buckets[bucket_id].size; i++){    // look for key in bucket
-    index = i;
-    
-    struct bucket_record record;
-    vector_get(&unordered_map->buckets[bucket_id], (char*)&record, i);
-
-    if(strcmp(record.key, key) == 0)
-      break;
-    else
-      index++;
-  }
-
-  if(index >= unordered_map->buckets[bucket_id].size){  // don't found
-    return -1;
-  }
-  else{                                                     // found
-    struct bucket_record record;
-    vector_get(&unordered_map->buckets[bucket_id], (char*)&record, index);
-    vector_get(&unordered_map->data, out, record.index);
-  };
-  return 0;
-};
-
-void unordered_map_set(struct unordered_map* unordered_map, char* data, const char* key){
-  unsigned int hash = unordered_map_hash_fun(key);
-  unsigned int bucket_id = hash % BUCKETS;
-
-  unsigned int index = 0;
-  for(int i = 0; i < unordered_map->buckets[bucket_id].size; i++){    // look for key in bucket
-    index = i;
-    
-    struct bucket_record record;
-    vector_get(&unordered_map->buckets[bucket_id], (char*)&record, i);
-
-    if(strcmp(record.key, key) == 0)
-      break;
-    else
-      index++;
-  }
-
-  if(index >= unordered_map->buckets[bucket_id].size){  // don't found
-    struct bucket_record record;
-    record.index = unordered_map->data.size;
-    memcpy(record.key, key, KEYSIZE);
-    vector_emplace_back(&unordered_map->buckets[bucket_id], (char*)&record);
-    vector_emplace_back(&unordered_map->data, data);
-  }
-  else{                                                     // found
-    vector_set(&unordered_map->data, data, index);
-  };
-};
+#endif

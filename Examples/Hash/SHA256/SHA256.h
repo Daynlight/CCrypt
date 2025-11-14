@@ -1,15 +1,19 @@
 #pragma once 
 
+#include "Algorithms/Hash/SHA256/sha256.h"
+
 #include <string>
 #include <sstream>
 #include <iomanip>
-#include <cstring>
 
-#include "Algorithms/Hash/SHA256/sha256.h"
 
-void SHA256Example(){
+namespace Algorithms::Example{
+void SHA256(){
+  printf("== SHA256Example ==\n");
+
   const char* text = "Hello World";
-
+  
+  // hash
   unsigned char hash[32] = {0};
   crypt_sha256((char*)text, (char*)hash);
 
@@ -21,4 +25,6 @@ void SHA256Example(){
   std::string my_hash = oss.str();
 
   printf("Sha256(%s): %s\n", text, my_hash.c_str());
+};
+
 };
