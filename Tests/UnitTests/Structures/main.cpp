@@ -11,6 +11,7 @@ int main(){
   assert.assertion("Vector Tests", vector_tests.runAll());
 
 
+  return -1;
   if(assert.results("Results"))
     return 0;
     
