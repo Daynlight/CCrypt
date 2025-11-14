@@ -45,6 +45,8 @@ public:
 
 
 bool SHA256::runAll(){
+  printf("==== SHA256 Tests ====\n");
+
   ROTR();
   notROTR();
   bigSigma0();

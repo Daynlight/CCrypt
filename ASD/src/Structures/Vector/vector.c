@@ -19,6 +19,7 @@ void vector_init(struct vector* vector, unsigned int size_of_el){
 
 void vector_destroy(struct vector* vector){
   free(vector->data);
+  vector->data = NULL;
 };
 
 

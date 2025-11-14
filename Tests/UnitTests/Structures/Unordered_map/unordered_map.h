@@ -24,7 +24,10 @@ public:
 
 
 inline bool Unordered_map::runAll(){
+  printf("==== Unordered_map Tests ====\n");
+
   simpleTest();
+  
   return assert.results("Unordered_map");
 };
 
