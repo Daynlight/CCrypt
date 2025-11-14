@@ -94,6 +94,23 @@ public:
 
 
 
+  void lt(const std::string& assertText, float tested, float correct){
+    total++;
+
+    if(tested >= correct){
+      printf("%s\n", assertText.c_str());
+      printf("Tested: %f\n", tested);
+      printf("Correct: %f\n", correct);
+      return;
+    }
+    else
+      passed++;
+  };
+
+
+
+
+
 
   void isNullptr(const std::string& assertText, const char* tested){
     total++;
