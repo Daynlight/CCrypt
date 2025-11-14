@@ -1,5 +1,7 @@
-#include "Unordered_map/Unordered_map.h"
+#include "Vector/vector.h"
+#include "Unordered_map/unordered_map.h"
 
 int main(){
-  StructUnorderedMapExample();
+  StructuresVectorExample();
+  StructuresUnorderedMapExample();
 }
