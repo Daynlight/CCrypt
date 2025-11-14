@@ -25,7 +25,7 @@ struct BST_TREE{
   unsigned int size_of_el;
   bst_compare compare;
 
-  struct BST_TREE* root;
+  struct BST_TREE* parent;
   struct BST_TREE* left;
   struct BST_TREE* right;
 };
