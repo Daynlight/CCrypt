@@ -1,22 +1,29 @@
 #pragma once 
 
+#include "Assert.h"
 #include "Structures/Unordered_map/unordered_map.h"
-#include "../../Assert.h"
 
-namespace UnitTests{
+
+namespace Structures::UnitTests{
 class Unordered_map{
 private:
-  Assert assert;
+  Tests::Assert assert;
 public:
   bool runAll();
   void simpleTest();
 };
-};
 
 
 
 
-inline bool UnitTests::Unordered_map::runAll(){
+
+
+
+
+
+
+
+inline bool Unordered_map::runAll(){
   simpleTest();
   return assert.results("Unordered_map");
 };
@@ -24,8 +31,10 @@ inline bool UnitTests::Unordered_map::runAll(){
 
 
 
-void UnitTests::Unordered_map::simpleTest() {
-  unordered_map map;
+
+
+void Unordered_map::simpleTest() {
+  struct unordered_map map;
   unordered_map_init(&map, sizeof(int));
 
   int a[20];
@@ -41,4 +50,5 @@ void UnitTests::Unordered_map::simpleTest() {
     assert.equal("Unordered_map::simpleTest failed", std::to_string(b[i]), std::to_string(a[i]));
 
   unordered_map_destroy(&map);
+};
 };

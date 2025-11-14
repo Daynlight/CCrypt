@@ -3,7 +3,7 @@
 #include <string>
 #include <functional>
 
-namespace UnitTests{
+namespace Tests{
 class Assert{
 private:
   unsigned int total = 0;
