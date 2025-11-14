@@ -2,20 +2,29 @@
 ///////// vector /////////
 //////////////////////////
 //// IDEA ////
-// Vector is dynamic array that allows 
-// storing dynamic data that can change with time
-// We want it for unordered_map, path, etc.
+// A vector is a dynamic array that can grow when needed.
+// It lets us store data even when we don't know how many elements we will need.
+// Useful for unordered_map, paths, lists, and more.
 
 //// How it works: ////
-// We have data and we don't know how much we have left
-// We add element as long as we have space
-// If we use all of our space we just create next 
-// bigger buffer and copy data to them. After that
-// we delete old buffer and swap with new one.
-// In this way we have unlimited memory to use.
+// A vector keeps two numbers:
+//   * size     — how many elements are currently stored
+//   * capacity — how much space is allocated
+//
+// When adding elements:
+//   * If size < capacity, we just insert the new element.
+//   * If size == capacity, we need more room:
+//       - allocate a new larger buffer
+//       - copy all existing elements to it
+//       - free the old buffer
+//       - replace it with the new one
+//
+// This allows the vector to grow dynamically
+// as long as the system has memory available.
 
 //// TL;TR ////
-// * When we use all of space we have just create new bigger want and swap them
+// * When capacity is full, allocate a larger buffer,
+//   copy elements, and continue using the new one.
 
 
 #ifndef VECTOR_H
@@ -30,6 +39,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 
 
 struct vector{

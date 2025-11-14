@@ -1,5 +1,10 @@
 #include "Structures/Vector/vector.h"
 
+
+
+
+
+
 void vector_init(struct vector* vector, unsigned int size_of_el){
   vector->size_of_el = size_of_el;
   vector->data = (char*)calloc(1, vector->size_of_el);
@@ -7,9 +12,19 @@ void vector_init(struct vector* vector, unsigned int size_of_el){
   vector->size = 0;
 };
 
+
+
+
+
+
 void vector_destroy(struct vector* vector){
   free(vector->data);
 };
+
+
+
+
+
 
 void vector_resize(struct vector* vector) {
   unsigned int new_cap = vector->cap * 2 + 1; 
@@ -22,6 +37,11 @@ void vector_resize(struct vector* vector) {
   vector->cap = new_cap;
 };
 
+
+
+
+
+
 void vector_reserve(struct vector *vector, unsigned int cap){
   unsigned int new_cap = vector->cap + cap; 
   char* temp = (char*)calloc(new_cap, vector->size_of_el);
@@ -33,14 +53,23 @@ void vector_reserve(struct vector *vector, unsigned int cap){
   vector->cap = new_cap;
 };
 
-void vector_emplace_back(struct vector *vector, char *data)
-{
+
+
+
+
+
+void vector_emplace_back(struct vector *vector, char *data){
   if(vector->size >= vector->cap)
     vector_resize(vector);
   
   memcpy(vector->data + vector->size * vector->size_of_el, data, vector->size_of_el);
   vector->size++;
 };
+
+
+
+
+
 
 void vector_get(struct vector* vector, char* out, unsigned int index){
   if(index >= vector->size) {
@@ -51,6 +80,11 @@ void vector_get(struct vector* vector, char* out, unsigned int index){
   unsigned int offset = index * vector->size_of_el;
   memcpy(out, vector->data + offset, vector->size_of_el);
 };
+
+
+
+
+
 
 void vector_set(struct vector* vector, char* data, unsigned int index){
   if(index >= vector->size) {

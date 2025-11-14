@@ -1,6 +1,11 @@
 #include "Structures/Unordered_map/unordered_map.h"
 
-unsigned int unordered_map_hash_fun(const char* key) {
+
+
+
+
+
+unsigned int unordered_map_hash_fun(const char* key){
   unsigned char hash[32] = {0};
   crypt_sha256((char*)key, (char*)hash);
 
@@ -10,6 +15,11 @@ unsigned int unordered_map_hash_fun(const char* key) {
 
   return result;
 };
+
+
+
+
+
 
 void unordered_map_init(struct unordered_map* unordered_map, unsigned int size_of_el){
   vector_init(&unordered_map->data, size_of_el);
@@ -22,6 +32,11 @@ void unordered_map_destroy(struct unordered_map* unordered_map){
   for(int i = 0; i < BUCKETS; i++)
     vector_destroy(&unordered_map->buckets[i]);
 };
+
+
+
+
+
 
 int unordered_map_get(struct unordered_map* unordered_map, char* out, const char* key){
   unsigned int hash = unordered_map_hash_fun(key);
@@ -50,6 +65,11 @@ int unordered_map_get(struct unordered_map* unordered_map, char* out, const char
   };
   return 0;
 };
+
+
+
+
+
 
 void unordered_map_set(struct unordered_map* unordered_map, char* data, const char* key){
   unsigned int hash = unordered_map_hash_fun(key);
