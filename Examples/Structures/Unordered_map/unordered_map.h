@@ -1,9 +1,6 @@
 #pragma once 
 
-#include <string>
-#include <sstream>
-#include <iomanip>
-#include <cstring>
+#include <string.h>
 
 #include "Structures/Unordered_map/unordered_map.h"
 

@@ -17,9 +17,6 @@
 //// TL;TR ////
 // * When we use all of space we have just create new bigger want and swap them
 
-//// Optimization: ////
-// * [NOTE] reserve function
-
 
 #ifndef VECTOR_H
 #define VECTOR_H
