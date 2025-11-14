@@ -60,6 +60,7 @@ void vector_emplace_back(struct vector* vector, char* data);
 void vector_get(struct vector* vector, char* out, unsigned int index);
 void vector_set(struct vector* vector, char* data, unsigned int index);
 
+void vector_alloc(struct vector* vector, unsigned int size, char* data);
 
 
 #ifdef __cplusplus

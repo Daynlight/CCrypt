@@ -16,6 +16,7 @@ public:
 
   void vectorResize();
   void vectorReserve();
+  void vectorAlloc();
 
   void vectorGet();
   void vectorSet();
@@ -40,6 +41,7 @@ inline bool Vector::runAll(){
   vectorDestroy();
   vectorResize();
   vectorReserve();
+  vectorAlloc();
   vectorGet();
   vectorSet();
   vectorEmplaceBack();
@@ -119,6 +121,38 @@ inline void Vector::vectorReserve() {
   vector_destroy(&vec);
 };
 
+
+
+
+
+
+inline void Vector::vectorAlloc() {
+  struct vector vec;
+  vector_init(&vec, sizeof(int));
+
+  int a = 5;
+  unsigned int elements = 20;
+  
+  unsigned int prev_size = vec.size;
+  unsigned int prev_cap = vec.cap;
+  unsigned int estimated_size = prev_size + elements;
+  unsigned int estimated_cap = prev_size + elements;
+
+  vector_alloc(&vec, elements, (char*)&a);
+
+
+  assert.equal("Vector::vectorAlloc size", vec.size, estimated_size);
+  assert.equal("Vector::vectorAlloc cap", vec.cap, estimated_cap);
+  
+  for(int i = prev_size; i < estimated_size; i++){
+    int b = 0;
+    vector_get(&vec, (char*)&b, i);
+    assert.equal("Vector::vectorAlloc data", b, a);
+  };
+
+
+  vector_destroy(&vec);
+};
 
 
 
