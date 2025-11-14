@@ -32,7 +32,7 @@ jobs:
       - name: Build Tests
         shell: bash
         run: |
-          cmake --build build --target HashUnitTests --parallel
+          cmake --build build --target AlgorithmsUnitTests --parallel
           cmake --build build --target StructuresUnitTests --parallel
 
       - name: Run Tests

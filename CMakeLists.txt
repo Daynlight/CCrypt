@@ -8,4 +8,4 @@ add_subdirectory(Examples)
 enable_testing()
 
 add_test(NAME StructuresUnitTests COMMAND StructuresUnitTests)
-add_test(NAME HashUnitTests COMMAND HashUnitTests)
+add_test(NAME AlgorithmsUnitTests COMMAND AlgorithmsUnitTests)

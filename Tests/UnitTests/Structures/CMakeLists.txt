@@ -3,7 +3,11 @@ cmake_minimum_required(VERSION 3.15)
 project(StructuresUnitTests LANGUAGES CXX)
 
 set(src
-  Main.cpp
+  main.cpp
+)
+
+set(headers
+  ../../
 )
 
 add_executable(StructuresUnitTests ${src})

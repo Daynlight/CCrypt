@@ -19,6 +19,7 @@ void vector_init(struct vector* vector, unsigned int size_of_el){
 
 void vector_destroy(struct vector* vector){
   free(vector->data);
+  vector->data = NULL;
 };
 
 
@@ -94,4 +95,16 @@ void vector_set(struct vector* vector, char* data, unsigned int index){
   };
   unsigned int offset = index * vector->size_of_el;
   memcpy(vector->data + offset, data, vector->size_of_el);
+};
+
+
+
+
+
+
+void vector_alloc(struct vector *vector, unsigned int size, char *data){
+  unsigned int missing_space = 2 * vector->size + size - vector->cap;
+  vector_reserve(vector, missing_space);
+  for(int i = 0; i < size; i++)
+    vector_emplace_back(vector, data);
 };
