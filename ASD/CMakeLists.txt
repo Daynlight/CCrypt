@@ -6,6 +6,7 @@ set(src
     src/Algorithms/Hash/SHA256/sha256.c
     src/Structures/Vector/vector.c
     src/Structures/Unordered_map/unordered_map.c
+    src/Structures/BST\ Tree/bst_tree.c
 )
 
 set(headers
