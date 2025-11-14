@@ -18,6 +18,11 @@ public:
       passed++;
   };
 
+
+
+
+
+
   void equal(const std::string& assertText, const std::string& tested, const std::string& correct){
     total++;
 
@@ -30,6 +35,11 @@ public:
     else
       passed++;
   };
+
+
+
+
+
 
   void notEqual(const std::string& assertText, const std::string& tested, const std::string& correct){
     total++;
@@ -44,6 +54,11 @@ public:
       passed++;
   };
 
+
+
+
+
+
   void equal(const std::string& assertText, int tested, int correct){
     total++;
 
@@ -56,6 +71,11 @@ public:
     else
       passed++;
   };
+
+
+
+
+
 
   void notEqual(const std::string& assertText, int tested, int correct){
     total++;
@@ -71,6 +91,10 @@ public:
   };
 
 
+
+
+
+
   void isNullptr(const std::string& assertText, const char* tested){
     total++;
 
@@ -81,6 +105,11 @@ public:
     else
       passed++;
   };
+
+
+
+
+
 
   void isNotNullptr(const std::string& assertText, const char* tested){
     total++;
