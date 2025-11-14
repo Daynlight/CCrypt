@@ -2,6 +2,8 @@
 #include "Unordered_map/unordered_map.h"
 
 int main(){
-  StructuresVectorExample();
-  StructuresUnorderedMapExample();
-}
+  Structures::Examples::Vector();
+  Structures::Examples::UnorderedMap();
+
+  return 0;
+};

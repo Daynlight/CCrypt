@@ -4,7 +4,9 @@
 
 #include <stdio.h>
 
-void StructuresVectorExample(){
+
+namespace Structures::Examples{
+void Vector(){
   printf("== StructuresVectorExample ==\n");
   
   // init
@@ -34,4 +36,6 @@ void StructuresVectorExample(){
 
   // destroy
   vector_destroy(&vec);
+};
+
 };
