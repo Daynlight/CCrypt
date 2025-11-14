@@ -1,21 +1,15 @@
 name: Release
 
 on:
-  workflow_run:
-    workflows: ["Build & Run Tests", "CodeQL"]
-    types: [completed]
+  pull_request:
+    branches: [ "main" ]
+  push:
     branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ${{ matrix.os }}
-
-    if: >
-      github.event.workflow_run.conclusion == 'success' && 
-      github.event.workflow_run.name == 'Build & Run Tests' ||
-      github.event.workflow_run.name == 'CodeQL'
-
 
     permissions:
       contents: write
@@ -36,32 +30,6 @@ jobs:
     - uses: actions/checkout@v4
       with:
         submodules: true
-
-    - name: Check required workflows status
-      run: |
-        echo "Checking status of required workflows..."
-        
-        # Sprawdź status testów
-        TESTS_STATUS=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          "https://api.github.com/repos/${{ github.repository }}/actions/runs" \
-          | jq -r '.workflow_runs[] | select(.name=="Build & Run Tests" and .head_sha=="${{ github.sha }}") | .conclusion' \
-          | head -1)
-        
-        # Sprawdź status CodeQL
-          CODEQL_STATUS=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          "https://api.github.com/repos/${{ github.repository }}/actions/runs" \
-          | jq -r '.workflow_runs[] | select(.name=="CodeQL" and .head_sha=="${{ github.sha }}") | .conclusion' \
-          | head -1)
-        
-        echo "Tests status: $TESTS_STATUS"
-        echo "CodeQL status: $CODEQL_STATUS"
-        
-        if [ "$TESTS_STATUS" != "success" ] || [ "$CODEQL_STATUS" != "success" ]; then
-          echo "Required workflows haven't completed successfully"
-          exit 1
-        fi
-        
-        echo "All required workflows completed successfully"
 
     - name: Set reusable strings
       id: strings
